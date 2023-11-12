@@ -1,0 +1,59 @@
+#!/bin/bash
+
+
+
+## check Git and wget and VIM Installed or Not 
+
+git=`whereis git`
+wget=`whereis wget` 
+vim=`whereis vim`
+
+if [ "$git" == "/usr/bin/git" ] || [ "$git" == "/usr/lib/git" ];then
+	echo "git Installed [ OK ]"
+	exit 0
+	if [ "$wget" == "/usr/bin/wget" ];then
+		echo "wget installed [ OK ]"
+		if [ "$vim" == "/usr/bin/vim" ];then
+			echo "vim Installed [ OK ]"
+			echo "> Downloading vim Vundle "
+			## Download vundle vim From https://github.com/VundleVim/Vundle.vim
+			git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+			echo "> Try to copy.vimrc File in /home/$USER"
+			## COPY my vimrc File to vimrc
+			## I put my settings and plugins on the Python programming language and the rest on the file
+			cp .vimrc ~/.vimrc
+			echo "> change Directory to /tmp"
+			cd /tmp
+			echo "> Get File from github to configure atomdark color"
+			## Downlod vim-atom-dark color from https://github.com/gosukiwi/vim-atom-dark
+			wget https://github.com/gosukiwi/vim-atom-dark/archive/refs/heads/master.zip
+			echo "> unzip File"
+			unzip master.zip
+			echo "> change Directory to vim-atom-dark-master"
+			cd vim-atom-dark-master
+			echo "> Copy color Files to /home/$USER/.vim "
+			cp -rvf colors ~/.vim/
+			sleep 2
+			echo "1- After this, the vimrc file will be opened for you by vim"
+			sleep 2
+			echo "2- Enter the command PluginInstall: to the plugins in the vimrc file. be installed in the system"
+			sleep 2
+			echo "3- Then exit vim using the :q command"
+			sleep 2
+			vim ~/.vimrc
+		else
+			echo "vim Not Installed [ ERROR ]"
+		fi
+	else
+		echo "ERROR ... wget Not Installed"
+		exit 0
+	fi
+else
+	echo "ERROR ... Git not installed"
+fi
+
+
+
+
+
+
